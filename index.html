@@ -54,7 +54,7 @@
 			var call = myPeer.call( destPeerID, mediaStream );
 			
 			// Answer call from other peer
-			peer.on('call', function(call) {
+			myPeer.on('call', function(call) {
 				call.answer(mediaStream);
 			});
 			
