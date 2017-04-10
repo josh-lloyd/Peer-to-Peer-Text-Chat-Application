@@ -4,25 +4,15 @@
 		<title>PeerJS Test</title>
 	</head>
 	<body>
-		<!-- Enter your user ID -->
-		<label>Your ID:</label><br>
-		<textarea id="yourID"></textarea><br>
+		<input id="start" type="button" value="Start"><br>
+		<input id="join" type="button" value="Join"><br>
 		
-		<!-- Enter other user ID -->
-		<label>Other ID:</label><br>
-		<textarea id="otherID"></textarea>
-		
-		<!-- Establish connection -->
-		<button id="connect">Connect</button><br>
+		<video autoplay id="videoElement;container">
+			
+		</video>
 		
 		<!-- Include PeerJS Library -->
 		<script src="http://cdn.peerjs.com/0.3/peer.min.js"></script>
-		
-		<!-- Add Video Element to Webpage -->
-		<div id="container">
-			<video autoplay="true" id="videoElement">
-			 
-			</video>
-		</div>
+		<script src="scripts.js"></script>
 	</body>
 </html>
