@@ -1,9 +1,3 @@
-var messages = []
-var peer_id, name, conn
-
-document.getElementById("start").onclick = startSession()
-document.getElementById("join").onclick = joinSession()
-
 function startSession() {
     //create peer object and pass api key to 
     var peer = new Peer({key: 'hogiwtt0dnecow29'})
@@ -68,4 +62,5 @@ function joinSession() {
     var call = peer.call(destid, navigator.getUserMedia)
 }
 
-var video = document.querySelector("#videoElement")
+document.getElementById("start").onclick = startSession
+document.getElementById("join").onclick = joinSession
