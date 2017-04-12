@@ -40,7 +40,7 @@ function joinSession() {
     var destid = prompt("Enter destination id:")
     
     //connect to destination peer
-    var conn = peer.destination(destid);
+    var conn = peer.connect(destid);
     
      //get media shim
     navigator.getUserMedia = navigator.getUserMedia ||
