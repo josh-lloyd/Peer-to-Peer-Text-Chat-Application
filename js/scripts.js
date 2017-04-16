@@ -1,66 +1,64 @@
-function startSession() {
-    //create peer object and pass api key to 
-    var peer = new Peer({key: 'hogiwtt0dnecow29'})
-
-    //prompt user for his and destination peer id
-    var yourid = prompt("Enter your id:")
-    var destid = prompt("Enter destination id:")
+function createGroup() {
+    //ask name of user's group
+    var groupid = prompt("Enter name/id of the group:");
     
-    //connect to destination peer
-    var conn = peer.connect(destid)
-    
-    //get media shim
-    navigator.getUserMedia = navigator.getUserMedia ||
-                             navigator.webkitGetUserMedia ||
-                             navigator.mozGetUserMedia
+    //create peer object based on group name
+    var peer = new Peer(groupid, {key: 'hogiwtt0dnecow29'});
                              
-    //get video feed
-    function getVideo(callback) {
-        navigator.getUserMedia(
+    //get microphone data from web browser
+    navigator.getUserMedia = navigator.getUserMedia ||
+                          navigator.webkitGetUserMedia ||
+                          navigator.mozGetUserMedia ||
+                          navigator.msGetUserMedia;
+                         
+    navigator.getUserMedia(
         {audio:true, video:true},
-        callback,
+        function(callback){},
         function(error){
             console.log(error)
             alert('an error occured')
-        })
-    }
+    })
     
-    //answer call from destination peer
-    peer.on('call', function(call) {
-        //answer call providing media stream
-        call.answer(navigator.mediaStream)
+    call.on('stream', function(stream) {
+        document.getElementById('videoElement').src = 'stream'
     })
 }
 
-function joinSession() {
-    var peer = new Peer({key: 'hogiwtt0dnecow29'})
-
-    //prompt user for his and destination peer id
-    var yourid = prompt("Enter your id:")
-    var destid = prompt("Enter destination id:")
+function joinGroup() {
+    //let user choose his id
+    var yourid = prompt("Choose your user id:")
     
-    //connect to destination peer
-    var conn = peer.connect(destid);
+    //enter name/id of group
+    var groupid = prompt("Name/id of group you wish to connect to:")
     
-     //get media shim
+    //create peer based on user id
+    var peer = new Peer(yourid, {key: 'hogiwtt0dnecow29'})
+    
+    //connect to group
+    var conn = peer.connect(groupid);
+    
+    //get webcam and mic data
     navigator.getUserMedia = navigator.getUserMedia ||
-                             navigator.webkitGetUserMedia ||
-                             navigator.mozGetUserMedia
-                             
-    //get video feed
-    function getVideo(callback) {
-        navigator.getUserMedia(
+                          navigator.webkitGetUserMedia ||
+                          navigator.mozGetUserMedia ||
+                          navigator.msGetUserMedia
+                         
+    navigator.getUserMedia(
         {audio:true, video:true},
-        callback,
+        function(callback){},
         function(error){
             console.log(error)
             alert('an error occured')
-        })
-    }
+    })
+
     
-    //make call to destination peer
-    var call = peer.call(destid, navigator.getUserMedia)
+    //make call to group (aka "founder peer") providing audio stream
+    var call = peer.call(groupid, navigator.getUserMedia)
+    
+    call.on('stream', function(stream) {
+        document.getElementById('videoElement').src = 'stream'
+    })
 }
 
-document.getElementById("start").onclick = startSession
-document.getElementById("join").onclick = joinSession
+document.getElementById("createGroup").onclick = createGroup
+document.getElementById("joinGroup").onclick = joinGroup
