@@ -18,10 +18,6 @@ function createGroup() {
             console.log(error)
             alert('an error occured')
     })
-    
-    call.on('stream', function(stream) {
-        document.getElementById('videoElement').src = 'stream'
-    })
 }
 
 function joinGroup() {
