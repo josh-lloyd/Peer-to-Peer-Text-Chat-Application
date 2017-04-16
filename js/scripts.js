@@ -18,6 +18,11 @@ function createGroup() {
             console.log(error)
             alert('an error occured')
     })
+    
+    peer.on('call', function(call) {
+        // Answer the call, providing our mediaStream
+        call.answer(navigator.getUserMedia);
+    });
 }
 
 function joinGroup() {
