@@ -1,11 +1,12 @@
-//create instance of peer server with SSL encryptioy
-var fs = require('fs');
+//create instance of peer server
+// var fs = require('fs');
 var PeerServer = require('peer').PeerServer;
 
 var server = PeerServer({
-  port: 9000,
-  ssl: {
-    key: fs.readFileSync('/path/to/your/ssl/key/here.key'),
-    cert: fs.readFileSync('/path/to/your/ssl/certificate/here.crt')
-  }
+    port: '8081',
+    path: '/peerjs'
+//   ssl: {
+//     key: fs.readFileSync('/etc/ssl/certs/private'),
+//     cert: fs.readFileSync('/etc/ssl/certs/ca-certificates.crt')
+//   }
 });
