@@ -12,4 +12,4 @@
 // });
 
 var PeerServer = require('peer').PeerServer;
-var server = PeerServer({port: 9000, path: '/peerjs'});
+var server = PeerServer({port: 8081, path: '/peerjs'});

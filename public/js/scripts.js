@@ -28,7 +28,17 @@ function connect() {
     document.write( "<h1>Connecting to server...</h><br>" );
     
     // Initialize peer object
-    peer = new Peer({key: 'hogiwtt0dnecow29'});
+    var peer = new Peer({
+        host: 'localhost',
+        port: 8081,
+        path: '/peerjs',
+        debug: 3,
+        config: {'iceServers': [
+        { url: 'stun:stun1.l.google.com:19302' },
+        { url: 'turn:numb.viagenie.ca',
+        credential: 'muazkh', username: 'webrtc@live.com' }
+        ]}
+    });
     
     // When 'open' event is triggered, give the user some information
     peer.on('open', function( id ) {
