@@ -9,3 +9,8 @@ var server = PeerServer({port: 8081, path: '/peerserver'});
 server.on('connection', function(id) { 
     peerList.push(id);
 });
+
+// When peer disconnects from server or peer is no longer reachable
+server.on('disconnect', function(id) { 
+    // do nothing, yet
+});
