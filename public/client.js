@@ -12,3 +12,5 @@ peer.on('open', function(id) {
 });
 
 // print number of peers to console
+var numberOfPeers = peerList.length;
+console.log('Number of peers contained in PeerServer: ' + numberOfPeers);
