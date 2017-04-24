@@ -33,3 +33,12 @@ peer.on('connection', function(conn) {
     // push data connection to list of data connections if it doesn't exist already
     dataConnections.indexOf(dataConn) === -1 ? dataConnections.push(dataConn) : console.log("This item already exists");
 });
+
+// send message to all peers we're connected to
+function sendMessageToPeers( message ) {
+    // loop through each peer connection
+    for( i=0; i<dataConnections.length; i++ ){
+        // for each data connection, send the message
+        dataConnections[i].send(message);
+    }
+}

@@ -4,7 +4,17 @@
         <title>PeerJS Application</title>
     </head>
     <body>
+        <!--Send messages to the other peers-->
+        <form>
+            Message:<br>
+            <input type="text" name="message">
+            <br><br>
+            <input type="submit" value="Send" onclick="sendMessageToPeers( document.getElementByName('message').value ) {"></a>
+        </form> 
         
+        <!--Recieve messages from the other peers-->
+        
+        <!--Include necessary libraries/frameworks-->
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"
                 integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
                 crossorigin="anonymous"></script>
