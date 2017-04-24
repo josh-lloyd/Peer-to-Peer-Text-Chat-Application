@@ -11,7 +11,7 @@ peer.on('open', function(id) {
   console.log('My peer ID is: ' + id);
 });
 
-// print number of peers to console
-
-// var numberOfPeers = peerList.length;
-// console.log('Number of peers contained in PeerServer: ' + numberOfPeers);
+// Get peerList from server
+$.get("https://peerjs-test-69-joshlloyd.c9users.io:8081/peerlist").done(function (peerList) {
+    console.log('List of peers:', peerList.length);
+});
