@@ -1,30 +1,54 @@
-// create peer object and connect to local peer server
 var peer = new Peer({
         host: 'peerjs-test-69-joshlloyd.c9users.io', // host URL
         port: 8081,                                  // listening port
         path: '/peerserver',                         // path
         debug: 3                                     // debug info needed (3 = highest amount)
-    });
+    }); // local peer object
+    
+var remotePeerIds = []; // remote peers list
+var dataConnections = []; // data connections list
 
-// create list of data connections
-var dataConnections = [];
-
-// print user id to console
-peer.on('open', function(id) {
-  console.log('My peer ID is: ' + id);
-});
-
-// establish connection with all peers in list...
-// get peer list from server
-$.get("https://peerjs-test-69-joshlloyd.c9users.io:8081/peerlist").done(function (peerList) {
-    // loop through peer list
-    for( var i=0; i<peerList.length; i++ ) {
-        // create data connection between local peer and current remote peer
-        var dataConn = peer.connect(i);
-        // push data connection to list of data connections associated with this peer if it don't already exist
-        dataConnections.indexOf(dataConn) === -1 ? dataConnections.push(dataConn) : console.log("This item already exists");
+function joinChat() {
+    // temorary list of peers
+    var listOfPeers;
+    
+    // get peer list from peer server
+    $.get("https://peerjs-test-69-joshlloyd.c9users.io:8081/peerlist").done(function (peerList) {
+        listOfPeers = peerList;
     }
-});
+    
+    for( var i=0; i<listOfPeers.length; i++ ) {
+        
+    }
+    
+    conn.on('open', function() {
+        console.log("Connected with peer: "+remotePeerId);
+        conn.on('data',function(data){
+           // You can do whatever you want with the data from this connection - this is also the main part
+           // dataHandler(conn,data);
+        });
+        conn.on('error',function(){
+          // handle error 
+          // connectionError(conn);
+        });
+
+        conn.on('close',function(){
+          // Handle connection closed
+          // connectionClose(conn);
+        });
+        connections.push(conn);
+    });
+  });
+    
+    var conn = peer.connect(remotePeerId);
+        handleConnection(conn);
+    }
+    
+    // Handle recieved connections
+    peer.on('connection',function(conn){
+         handleConnection(conn);
+    });
+}
 
 // whenever another peer attempts to connect with us
 peer.on('connection', function(conn) {
@@ -35,10 +59,14 @@ peer.on('connection', function(conn) {
 });
 
 // send message to all peers we're connected to
-function sendMessageToPeers( message ) {
+function broadcastMessage( message ) {
     // loop through each peer connection
-    for( i=0; i<dataConnections.length; i++ ){
+    for( var i=0; i<dataConnections.length; i++ ){
         // for each data connection, send the message
         dataConnections[i].send(message);
     }
 }
+
+dataConnections.on('data', function(data) {
+    console.log('Received', data);
+  });
