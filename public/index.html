@@ -4,19 +4,26 @@
         <title>PeerJS Application</title>
     </head>
     <body>
-        <!--Send messages to the other peers-->
-        <form>
-            Message:<br>
-            <input type="text" name="message">
-            <br><br>
-            <input type="submit" value="Send" onclick="broadcastMessage( document.getElementByName('message').value ) {"></a>
-        </form> 
-        
-        <div id="messageBox">
-            
+        <!-- Start page -->
+        <div id="start">
+            <!--Send messages to the other peers-->
+            <input type="submit" value="Join Chat" onclick="broadcastMessage( document.getElementByName('message').value ) {"></a>
         </div>
         
-        <!--Recieve messages from the other peers-->
+        <!-- Chatroom -->
+        <div id="chatroom">
+            <!--Send messages to the other peers-->
+            <form>
+                Message:<br>
+                <input type="text" name="message">
+                <br><br>
+                <input type="submit" value="Send" onclick="broadcastMessage( document.getElementByName('message').value ) {"></a>
+            </form> 
+            
+            <div>
+                <p id="message"></p><br>
+            </div>
+        </div>
         
         <!--Include necessary libraries/frameworks-->
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"

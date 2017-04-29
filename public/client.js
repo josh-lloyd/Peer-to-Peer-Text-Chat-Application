@@ -5,9 +5,9 @@ var peer = new Peer({
         debug: 3                                     // debug info needed (3 = highest amount)
     }); // local peer object
     
-var remotePeerIds = []; // remote peers list
-var dataConnections = []; // data connections list
+var connections = []; // data connections list
 
+// join chat room
 function joinChat() {
     // temorary list of peers
     var listOfPeers;
@@ -17,45 +17,41 @@ function joinChat() {
         listOfPeers = peerList;
     }
     
+    // make connections for each peer already on the server
     for( var i=0; i<listOfPeers.length; i++ ) {
+        var conn = peer.connect(listOfPeers[i]);
         
-    }
-    
-    conn.on('open', function() {
-        console.log("Connected with peer: "+remotePeerId);
-        conn.on('data',function(data){
-           // You can do whatever you want with the data from this connection - this is also the main part
-           // dataHandler(conn,data);
-        });
-        conn.on('error',function(){
-          // handle error 
-          // connectionError(conn);
-        });
-
-        conn.on('close',function(){
-          // Handle connection closed
-          // connectionClose(conn);
-        });
+        // connect to current peer in loop
+        conn = peer.connect(listOfPeers[i]);
+        
+        // when data connection is established
+        conn.on('open', function() {
+            // when data is recieved from a peer
+            conn.on('data',function(data){
+               document.getElementById("demo").innerHTML = data;
+            });
+        }
+        // add peer to list
         connections.push(conn);
-    });
-  });
-    
-    var conn = peer.connect(remotePeerId);
-        handleConnection(conn);
-    }
-    
-    // Handle recieved connections
-    peer.on('connection',function(conn){
-         handleConnection(conn);
-    });
+    }}
 }
 
-// whenever another peer attempts to connect with us
+// whenever another peer tries to connect
 peer.on('connection', function(conn) {
-    // create data connection between remote peer and local peer
-    var dataConn = peer.connect(conn);
+    // create data connection
+    var conn = peer.connect(conn);
+    
+    // set connections listener functions
+    conn.on('open', function() {
+        // when data is recieved from a peer
+        conn.on('data',function(data){
+            // add message to html element
+            document.getElementById("message").innerHTML = data;
+        });
+    }
+    
     // push data connection to list of data connections if it doesn't exist already
-    dataConnections.indexOf(dataConn) === -1 ? dataConnections.push(dataConn) : console.log("This item already exists");
+    connections.push(conn);
 });
 
 // send message to all peers we're connected to
@@ -66,7 +62,3 @@ function broadcastMessage( message ) {
         dataConnections[i].send(message);
     }
 }
-
-dataConnections.on('data', function(data) {
-    console.log('Received', data);
-  });
